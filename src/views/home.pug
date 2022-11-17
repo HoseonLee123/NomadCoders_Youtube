@@ -1,0 +1,11 @@
+extends base.pug
+include mixins/video.pug
+
+block upload
+  a(href="/video/upload") Upload Video 
+
+block content 
+  each video in videos
+    +video(video)
+  else 
+    li Sorry nothing found 😢

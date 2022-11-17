@@ -1,0 +1,27 @@
+include mixins/video.pug
+
+doctype html
+html(lang="ko")
+  head 
+    title #{pageTitle} | Youtube  
+    // 각각의 res.render에서 변수를 전달받을 수 있음
+    link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css")
+  body
+    header
+      h1=pageTitle
+      nav
+        ul 
+          li 
+            a(href="/") Home
+
+    main
+      form(method="GET")
+        input(placeholder="Search by title" type="text" name="keyword")
+        input(type="submit" value="Search now")
+      div
+        each video in videos 
+          +video(video)
+
+  include partials/footer.pug
+
+

@@ -1,0 +1,11 @@
+mixin video(video)
+  div 
+    h4
+      a(href=`/video/${video.id}`)=video.title 
+    p=video.description
+    p=video.hashtags
+    small=video.createdAt
+    hr 
+
+
+

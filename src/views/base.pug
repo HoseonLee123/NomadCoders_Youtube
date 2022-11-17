@@ -1,0 +1,33 @@
+doctype html
+html(lang="ko")
+  head 
+    title #{pageTitle} | #{siteName}  
+    // 각각의 res.render에서 변수를 전달받을 수 있음
+    link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css")
+  body
+    header
+      h1=pageTitle
+
+      nav
+        ul 
+          li 
+            a(href="/") Home
+          li          
+            a(href="/search") Search
+          li
+            block upload
+          li 
+            block delete
+          if loggedIn
+            li
+              a(href="/logout") Logout
+            li 
+              a(href="/my-profile") #{loggedInUser.name}님의 Profile 
+          else
+            li 
+              a(href="/login") Login
+            li 
+              a(href="/join") Join
+    main
+      block content
+  include partials/footer.pug

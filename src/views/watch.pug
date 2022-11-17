@@ -1,0 +1,12 @@
+extends base.pug
+
+block upload
+  a(href=`${video.id}/edit`) Edit
+block delete
+  a(href=`${video.id}/delete`) Delete
+
+block content 
+  div 
+    p=video.description
+    p=video.hashtags
+    small=video.createdAt
