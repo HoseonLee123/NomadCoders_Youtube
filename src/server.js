@@ -6,7 +6,6 @@ import { localsMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
-import { connection } from "mongoose";
 
 const app = express(); // Create a server
 
