@@ -65,7 +65,7 @@ export const postLogin = async (req, res) => {
 export const startGithubLogin = (req, res) => {
   const baseURL = "https://github.com/login/oauth/authorize";
   const config = {
-    client_id: "7216d50f732b14ff4992",
+    client_id: process.env.GH_CLIENT,
     allow_signup: false,
     scope: "read:user user:email",
   };
@@ -74,8 +74,22 @@ export const startGithubLogin = (req, res) => {
   return res.redirect(finalURL);
 };
 
-export const finishGithubLogin = (req, res) => {
-  return res.redirect("/");
+export const finishGithubLogin = async (req, res) => {
+  const baseURL = "https://github.com/login/oauth/access_token";
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    client_secret: process.env.GH_SECRET,
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalURL = `${baseURL}?${params}`;
+  const data = await fetch(finalURL, {
+    method: "POST",
+    headers: {
+      Accept: "application / json",
+    },
+  });
+  const json = await data.json();
 };
 
 export const logout = (req, res) => res.send("Logout");
