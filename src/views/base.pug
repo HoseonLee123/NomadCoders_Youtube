@@ -19,10 +19,10 @@ html(lang="ko")
           li 
             block delete
           if loggedIn
+            li 
+              a(href="/user/edit") Edit Profile
             li
               a(href="/user/logout") Logout
-            li 
-              a(href="/my-profile") #{loggedInUser.name}님의 Profile 
           else
             li 
               a(href="/login") Login

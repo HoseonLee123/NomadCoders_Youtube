@@ -1,3 +1,4 @@
+// App start setting
 import "dotenv/config";
 import "./db"; // Connect to a mongoDB
 import "./models/Video";
