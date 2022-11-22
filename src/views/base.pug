@@ -20,7 +20,7 @@ html(lang="ko")
             block delete
           if loggedIn
             li
-              a(href="/logout") Logout
+              a(href="/user/logout") Logout
             li 
               a(href="/my-profile") #{loggedInUser.name}님의 Profile 
           else
