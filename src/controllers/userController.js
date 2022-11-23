@@ -151,12 +151,27 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    username,
-    location,
-  });
+  if (req.body.name === req.session.user.name) {
+    return res
+      .status(400)
+      .render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessage: "The name is just same. No change.",
+      });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/user/edit");
 };
 
 export const see = (req, res) => res.send("See a user");
