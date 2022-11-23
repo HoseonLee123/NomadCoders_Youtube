@@ -142,7 +142,7 @@ export const logout = (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+  return res.render("user/edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEdit = async (req, res) => {
   const {
@@ -151,15 +151,7 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
-  if (req.body.name === req.session.user.name) {
-    return res
-      .status(400)
-      .render("edit-profile", {
-        pageTitle: "Edit Profile",
-        errorMessage: "The name is just same. No change.",
-      });
-  }
-
+  // 변경하려는 것과 기존 DB에 있는 것이 같은지 여부 확인 필요
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
@@ -174,4 +166,15 @@ export const postEdit = async (req, res) => {
   return res.redirect("/user/edit");
 };
 
-export const see = (req, res) => res.send("See a user");
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect("/");
+  }
+  return res.render("user/change-password", { pageTitle: "Change Password" });
+};
+export const postChangePassword = (req, res) => {
+  // Send notification
+  return redirect("/");
+};
+
+// export const see = (req, res) => res.send("See a user");

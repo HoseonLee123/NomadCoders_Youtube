@@ -28,7 +28,7 @@ export const watch = async (req, res) => {
       .status(404)
       .render("404.pug", { pageTitle: "Video not found 😕" });
   }
-  return res.render("watch.pug", { pageTitle: video.title, video });
+  return res.render("video/watch.pug", { pageTitle: video.title, video });
 };
 
 export const getEdit = async (req, res) => {
@@ -39,7 +39,10 @@ export const getEdit = async (req, res) => {
       .status(404)
       .render("404.pug", { pageTitle: "Video not found 😕" });
   }
-  return res.render("edit.pug", { pageTitle: `Edit ${video.title}`, video });
+  return res.render("video/edit.pug", {
+    pageTitle: `Edit ${video.title}`,
+    video,
+  });
 };
 export const postEdit = async (req, res) => {
   const { id } = req.params;
@@ -66,7 +69,7 @@ export const deleteVideo = async (req, res) => {
 };
 
 export const getUpload = (req, res) => {
-  return res.render("upload.pug", { pageTitle: "Upload a video" });
+  return res.render("video/upload.pug", { pageTitle: "Upload a video" });
 };
 export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
