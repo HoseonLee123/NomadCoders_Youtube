@@ -150,7 +150,9 @@ export const postEdit = async (req, res) => {
       user: { _id },
     },
     body: { name, email, username, location },
+    file,
   } = req;
+  console.log(file);
   // 변경하려는 것과 기존 DB에 있는 것이 같은지 여부 확인 필요
   const updatedUser = await User.findByIdAndUpdate(
     _id,

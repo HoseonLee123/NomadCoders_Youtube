@@ -1,3 +1,5 @@
+import multer from "multer";
+
 // Express and Pug connection
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Youtube";
@@ -22,3 +24,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 };
+
+export const uploadFile = multer({
+  dest: "upload/",
+});
