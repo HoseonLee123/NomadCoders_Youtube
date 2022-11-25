@@ -147,16 +147,16 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, email, username, location },
     file,
   } = req;
-  console.log(file);
   // 변경하려는 것과 기존 DB에 있는 것이 같은지 여부 확인 필요
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,
