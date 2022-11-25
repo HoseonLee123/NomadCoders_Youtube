@@ -6,6 +6,7 @@ block delete
   a(href=`${video.id}/delete`) Delete
 
 block content 
+  video(src="/" + video.fileUrl controls width=300 height=500)
   div 
     p=video.description
     p=video.hashtags
