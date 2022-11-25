@@ -30,6 +30,7 @@ userRouter
   .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
-// userRouter.get("/:id", see); // 순서 중요
+
+userRouter.get("/:id", see);
 
 export default userRouter;
