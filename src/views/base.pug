@@ -15,10 +15,8 @@ html(lang="ko")
           li          
             a(href="/search") Search
           if loggedIn
-            li
-              block upload
             li 
-              block delete
+              a(href="/video/upload") Upload Video 
             li 
               a(href=`/user/${loggedInUser._id}`) My Profile 
             li 
