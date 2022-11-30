@@ -27,8 +27,8 @@ app.use(
 app.use(localsMiddleware); // res.locals object 생성
 
 app.use("/", rootRouter);
-app.use("/upload", express.static("upload"));
-app.use("/user", userRouter);
-app.use("/video", videoRouter);
+app.use("/uploads", express.static("uploads"));
+app.use("/users", userRouter);
+app.use("/videos", videoRouter);
 
 export default app;

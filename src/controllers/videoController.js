@@ -1,4 +1,3 @@
-import User from "../models/User";
 import Video from "../models/Video";
 
 // rootRouter
@@ -29,7 +28,7 @@ export const watch = async (req, res) => {
       .status(404)
       .render("404.pug", { pageTitle: "Video not found 😕" });
   }
-  return res.render("video/watch.pug", {
+  return res.render("videos/watch.pug", {
     pageTitle: video.title,
     video,
   });
@@ -43,7 +42,7 @@ export const getEdit = async (req, res) => {
       .status(404)
       .render("404.pug", { pageTitle: "Video not found 😕" });
   }
-  return res.render("video/edit.pug", {
+  return res.render("videos/edit.pug", {
     pageTitle: `Edit ${video.title}`,
     video,
   });
@@ -63,7 +62,7 @@ export const postEdit = async (req, res) => {
     hashtags: Video.formatHashtags(hashtags),
   });
 
-  return res.redirect(`/video/${id}`);
+  return res.redirect(`/videos/${id}`);
 };
 
 export const deleteVideo = async (req, res) => {
@@ -73,7 +72,7 @@ export const deleteVideo = async (req, res) => {
 };
 
 export const getUpload = (req, res) => {
-  return res.render("video/upload.pug", { pageTitle: "Upload a video" });
+  return res.render("videos/upload.pug", { pageTitle: "Upload a video" });
 };
 export const postUpload = async (req, res) => {
   const {

@@ -143,7 +143,7 @@ export const logout = (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  return res.render("user/edit-profile", { pageTitle: "Edit Profile" });
+  return res.render("users/edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEdit = async (req, res) => {
   const {
@@ -166,14 +166,14 @@ export const postEdit = async (req, res) => {
     { new: true }
   );
   req.session.user = updatedUser;
-  return res.redirect("/user/edit");
+  return res.redirect("/users/edit");
 };
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
     return res.redirect("/");
   }
-  return res.render("user/change-password", { pageTitle: "Change Password" });
+  return res.render("users/change-password", { pageTitle: "Change Password" });
 };
 export const postChangePassword = async (req, res) => {
   const {
@@ -185,13 +185,13 @@ export const postChangePassword = async (req, res) => {
   const user = await User.findById(_id);
   const ok = await bcrypt.compare(oldPassword, user.password);
   if (!ok) {
-    return res.status(400).render("user/change-password", {
+    return res.status(400).render("users/change-password", {
       pageTitle: "Change Password",
       errorMessage: "The current password is incorrect.",
     });
   }
   if (newPassword !== newPasswordConfirmation) {
-    return res.status(400).render("user/change-password", {
+    return res.status(400).render("users/change-password", {
       pageTitle: "Change Password",
       errorMessage: "The new password does not match.",
     });
@@ -209,7 +209,7 @@ export const see = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
   const video = await Video.find({ owner: id });
-  return res.render("user/profile", {
+  return res.render("users/profile", {
     pageTitle: user.name,
     user,
     video,
