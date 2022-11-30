@@ -1,6 +1,7 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import fetch from "cross-fetch";
+import Video from "../models/Video";
 
 // rootRouter
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
@@ -207,8 +208,10 @@ export const see = async (req, res) => {
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
+  const video = await Video.find({ owner: id });
   return res.render("user/profile", {
     pageTitle: user.name,
     user,
+    video,
   });
 };

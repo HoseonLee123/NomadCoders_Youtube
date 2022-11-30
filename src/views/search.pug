@@ -19,8 +19,10 @@ html(lang="ko")
         input(placeholder="Search by title" type="text" name="keyword")
         input(type="submit" value="Search now")
       div
-        each video in videos 
-          +video(video)
+        each videos in video
+          +video(videos)
+        else 
+          li Sorry nothing found 😢
 
   include partials/footer.pug
 

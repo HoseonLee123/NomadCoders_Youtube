@@ -3,28 +3,27 @@ import Video from "../models/Video";
 
 // rootRouter
 export const home = async (req, res) => {
-  const videos = await Video.find({}).sort({ createdAt: "desc" });
-  return res.render("home", { pageTitle: "Home", videos }); // home.pug에게 변수 전달
+  const video = await Video.find({}).sort({ createdAt: "desc" });
+  return res.render("home", { pageTitle: "Home", video });
 };
 
 export const search = async (req, res) => {
   const { keyword } = req.query;
-  let videos = [];
+  let video = [];
   if (keyword) {
-    videos = await Video.find({
+    video = await Video.find({
       title: {
         $regex: new RegExp(keyword, "i"),
       },
     });
   }
-  return res.render("search", { pageTitle: "Search", videos });
+  return res.render("search", { pageTitle: "Search", video });
 };
 
 // videoRouter
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner");
   if (!video) {
     return res
       .status(404)
@@ -33,7 +32,6 @@ export const watch = async (req, res) => {
   return res.render("video/watch.pug", {
     pageTitle: video.title,
     video,
-    owner,
   });
 };
 
