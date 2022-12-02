@@ -1,22 +1,23 @@
+import User from "../models/User";
 import Video from "../models/Video";
 
 // rootRouter
 export const home = async (req, res) => {
-  const video = await Video.find({}).sort({ createdAt: "desc" });
-  return res.render("home", { pageTitle: "Home", video });
+  const videos = await Video.find({}).sort({ createdAt: "desc" });
+  return res.render("home", { pageTitle: "Home", videos });
 };
 
 export const search = async (req, res) => {
   const { keyword } = req.query;
-  let video = [];
+  let videos = [];
   if (keyword) {
-    video = await Video.find({
+    videos = await Video.find({
       title: {
         $regex: new RegExp(keyword, "i"),
       },
     });
   }
-  return res.render("search", { pageTitle: "Search", video });
+  return res.render("search", { pageTitle: "Search", videos });
 };
 
 // videoRouter
@@ -81,13 +82,16 @@ export const postUpload = async (req, res) => {
   const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
-    await Video.create({
+    const newVideo = await Video.create({
       fileUrl,
       title,
       description,
       hashtags: Video.formatHashtags(hashtags),
       owner: _id,
     });
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
   } catch (error) {
     return res.status(400).render("upload.pug", {
       pageTitle: "Upload a video",

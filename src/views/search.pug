@@ -19,8 +19,8 @@ html(lang="ko")
         input(placeholder="Search by title" type="text" name="keyword")
         input(type="submit" value="Search now")
       div
-        each videos in video
-          +video(videos)
+        each video in videos
+          +video(video)
         else 
           li Sorry nothing found 😢
 
