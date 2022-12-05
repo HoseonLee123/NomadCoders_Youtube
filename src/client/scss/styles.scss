@@ -1,5 +1,21 @@
-@import "variables";
+// Config
+@import "config/variables";
+@import "config/reset";
+
+// Components - partials, mixins
+
+// Screens - other pug files
+
+// Defaults
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 body {
-  background-color: $back;
-  color: $color;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: $bg;
+  color: white;
 }
