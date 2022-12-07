@@ -3,11 +3,19 @@
 @import "config/reset";
 
 // Components - partials, mixins
+@import "components/header.scss";
+@import "components/footer.scss";
+@import "components/video.scss";
+@import "components/shared.scss";
+@import "components/forms.scss";
+@import "components/social-login.scss";
 
 // Screens - other pug files
+@import "screens/search.scss";
+@import "screens/profile.scss";
+@import "screens/edit-profile.scss";
 
 // Defaults
-
 a {
   color: inherit;
   text-decoration: none;
@@ -18,4 +26,11 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: $bg;
   color: white;
+}
+
+main {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
 }

@@ -1,29 +1,15 @@
+extends base.pug
 include mixins/video.pug
 
-doctype html
-html(lang="ko")
-  head 
-    title #{pageTitle} | Youtube  
-    // 각각의 res.render에서 변수를 전달받을 수 있음
-    link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css")
-  body
-    header
-      h1=pageTitle
-      nav
-        ul 
-          li 
-            a(href="/") Home
+block content 
+  form(method="GET").search__form
+    input(placeholder="Search by title" type="text" name="keyword")
+    button
+      i.fa-solid.fa-magnifying-glass
 
-    main
-      form(method="GET")
-        input(placeholder="Search by title" type="text" name="keyword")
-        input(type="submit" value="Search now")
-      div
-        each video in videos
-          +video(video)
-        else 
-          li Sorry nothing found 😢
-
-  include partials/footer.pug
-
+  div.video-grid
+    each video in videos
+      +video(video)
+    else 
+      span.empty__message No videos found
 
