@@ -54,9 +54,13 @@ volumeRange.addEventListener("change", (event) => {
   } // 한번의 드래그로 볼륨을 0으로 만들고 → 다시 음소거를 해체했을 때 → 드래그를 시작한 볼륨으로 돌아가기 위한 if문
 });
 
+const formatTime = (seconds) => {
+  const startIdx = seconds >= 3600 ? 11 : 14;
+  return new Date(seconds * 1000).toISOString().substring(startIdx, 19);
+};
 video.addEventListener("timeupdate", () => {
-  currentTime.innerText = Math.floor(video.currentTime);
+  currentTime.innerText = formatTime(Math.floor(video.currentTime));
 });
 video.addEventListener("loadedmetadata", () => {
-  totalTime.innerText = Math.floor(video.duration);
+  totalTime.innerText = formatTime(Math.floor(video.duration));
 });
