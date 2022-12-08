@@ -1,8 +1,9 @@
 const video = document.querySelector("video");
 const playBtn = document.getElementById("play");
 const muteBtn = document.getElementById("mute");
-const time = document.getElementById("time");
 const volumeRange = document.getElementById("volume");
+const currentTime = document.getElementById("currentTime");
+const totalTime = document.getElementById("totalTime");
 
 const volumeDefault = 0.3;
 let volumeUser = volumeDefault;
@@ -51,4 +52,11 @@ volumeRange.addEventListener("change", (event) => {
   if (value !== "0") {
     volumeUser = value;
   } // 한번의 드래그로 볼륨을 0으로 만들고 → 다시 음소거를 해체했을 때 → 드래그를 시작한 볼륨으로 돌아가기 위한 if문
+});
+
+video.addEventListener("timeupdate", () => {
+  currentTime.innerText = Math.floor(video.currentTime);
+});
+video.addEventListener("loadedmetadata", () => {
+  totalTime.innerText = Math.floor(video.duration);
 });
