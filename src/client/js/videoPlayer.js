@@ -7,6 +7,7 @@ const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
+const videoControls = document.getElementById("videoControls");
 
 const volumeDefault = 0.3;
 let volumeUser = volumeDefault;
@@ -86,4 +87,24 @@ fullScreenBtn.addEventListener("click", () => {
     videoContainer.requestFullscreen();
     fullScreenBtn.innerText = "Exit Full Screen";
   }
+});
+
+let controlsTimeoutId;
+let controlsTimeoutIdMove;
+const hideControls = () => videoControls.classList.remove("showing");
+
+video.addEventListener("mousemove", () => {
+  if (controlsTimeoutId) {
+    clearTimeout(controlsTimeoutId);
+    controlsTimeoutId = null;
+  } // 3. 2번이 실행되는 동안 다시 비디오에 돌아왔을 때, 실행중인 2번 없애주기
+  if (controlsTimeoutIdMove) {
+    clearTimeout(controlsTimeoutIdMove);
+    controlsTimeoutIdMove = null;
+  } // 5. 4번이 실행되는 동안 다시 마우스가 움직이는 경우에, 실행중인 4번 없애주기
+  videoControls.classList.add("showing"); // 1. 마우스가 비디오에 들어왔을 때 컨트롤바 보이기
+  controlsTimeoutIdMove = setTimeout(hideControls, 3000); // 4. 마우스가 비디오에 들어오고, 비디오 안에서 3초 동안 아무 동작을 안 하면 컨트롤바 숨기기
+});
+video.addEventListener("mouseleave", () => {
+  controlsTimeoutId = setTimeout(hideControls, 1000); // 2. 마우스가 비디오에서 나갔을 때 1초 후에 컨트롤바 숨기기
 });
