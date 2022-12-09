@@ -4,6 +4,7 @@ const muteBtn = document.getElementById("mute");
 const volumeRange = document.getElementById("volume");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
 
 const volumeDefault = 0.3;
 let volumeUser = volumeDefault;
@@ -60,7 +61,16 @@ const formatTime = (seconds) => {
 };
 video.addEventListener("timeupdate", () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
+  timeline.value = Math.floor(video.currentTime);
 });
 video.addEventListener("loadedmetadata", () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
+});
+
+timeline.addEventListener("input", (event) => {
+  const {
+    target: { value },
+  } = event;
+  video.currentTime = value;
 });
