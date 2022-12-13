@@ -3,18 +3,26 @@ extends ../base.pug
 block content 
   div#videoContainer
     video(src="/" + video.fileUrl width="300" hegith="300")
-    div#videoControls 
-      button#play Play 
-      button#mute Mute 
-      input(type="range" min="0" max="1" step="any")#volume
-      div 
-        span#currentTime 00:00
-        span  / 
-        span#totalTime 00:00
-      div
-        input(type="range" min="0" value="0" step="1")#timeline
-      div 
-        button#fullScreen Enter Full Screen
+    div#videoControls.videoControls 
+      div.videoControls__first
+        input(type="range" min="0" value="0" step="1")#timeline.videoControls__timeline
+        div.videoControls__time
+          span#currentTime 00:00
+          span  / 
+          span#totalTime 00:00
+      div.videoControls__second
+        div.videoControls__second-1
+          div.videoControls__play
+            span#play 
+              i.fas.fa-play
+          div.videoControls__volume
+            span#mute
+              i.fas.fa-volume-high
+
+        div.videoControls__second-2
+          span#fullScreen 
+            i.fas.fa-expand
+    input(type="range" min="0" max="1" step="any")#volume
   //- div 
   //-   p=video.description
   //-   p=video.hashtags

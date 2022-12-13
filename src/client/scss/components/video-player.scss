@@ -1,0 +1,66 @@
+#videoContainer {
+  width: 100%;
+  position: relative;
+  video {
+    width: 100%;
+  }
+  #volume {
+    opacity: 0;
+    &.showing {
+      opacity: 1;
+    }
+    position: absolute;
+    bottom: 30px;
+    left: 110px;
+    cursor: pointer;
+  }
+  .videoControls {
+    opacity: 0;
+    &.showing {
+      opacity: 1;
+    }
+    width: 100%;
+    position: absolute;
+    bottom: 30px;
+    .videoControls__first {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-bottom: 20px;
+      .videoControls__timeline {
+        width: 98%;
+        cursor: pointer;
+      }
+      .videoControls__time {
+        font-size: 15px;
+      }
+    }
+    .videoControls__second {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 30px;
+      padding-right: 30px;
+      .videoControls__second-1 {
+        display: flex;
+        .videoControls__play {
+          margin-right: 25px;
+          font-size: 25px;
+          cursor: pointer;
+        }
+        .videoControls__volume {
+          font-size: 25px;
+          cursor: pointer;
+          input {
+            cursor: pointer;
+            margin-left: 5px;
+          }
+        }
+      }
+      .videoControls__second-2 {
+        font-size: 25px;
+        cursor: pointer;
+      }
+    }
+  }
+}
