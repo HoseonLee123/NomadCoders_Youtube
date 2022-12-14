@@ -2,7 +2,9 @@ extends ../base.pug
 
 block content
   div 
-    button#startBtn Start Recording
+    video#preview
+    button#startBtn
+      i.fas.fa-camera
   if errorMessage   
     h4=errorMessage 
 
