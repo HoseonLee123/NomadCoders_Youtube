@@ -12,11 +12,6 @@ const fullScreenBtnIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 
-const volumeDefault = 0.3;
-let volumeUser = volumeDefault;
-volumeRange.value = volumeDefault;
-video.volume = volumeDefault;
-
 const handlePlayBtnClick = () => {
   if (video.paused) {
     video.play();
@@ -27,14 +22,11 @@ const handlePlayBtnClick = () => {
     ? "fa-solid fa-play"
     : "fa-solid fa-pause";
 };
-playBtn.addEventListener("click", handlePlayBtnClick);
-video.addEventListener("click", handlePlayBtnClick);
-document.addEventListener("keyup", (event) => {
-  if (event.code === "Space") {
-    handlePlayBtnClick();
-  }
-});
 
+const volumeDefault = 0.3;
+let volumeUser = volumeDefault;
+volumeRange.value = volumeDefault;
+video.volume = volumeDefault;
 const handleMuteBtnClick = () => {
   if (video.muted) {
     video.muted = false;
@@ -47,12 +39,6 @@ const handleMuteBtnClick = () => {
     : "fa-solid fa-volume-high";
   volumeRange.value = video.muted ? "0" : volumeUser;
 };
-muteBtn.addEventListener("click", handleMuteBtnClick);
-document.addEventListener("keyup", (event) => {
-  if (event.code === "KeyM") {
-    handleMuteBtnClick();
-  }
-});
 
 const handleVolumeRangeInput = (event) => {
   const {
@@ -76,8 +62,6 @@ const handleVolumeRangeChange = (event) => {
     volumeUser = value;
   } // 한번의 드래그로 볼륨을 0으로 만들고 → 다시 음소거를 해체했을 때 → 드래그를 시작한 볼륨으로 돌아가기 위한 if문
 };
-volumeRange.addEventListener("input", handleVolumeRangeInput);
-volumeRange.addEventListener("change", handleVolumeRangeChange);
 
 const formatTime = (seconds) => {
   const startIdx = seconds >= 3600 ? 11 : 14;
@@ -91,8 +75,6 @@ const handleVideoTotalTime = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration); // 타임라인의 영상 길이 입력
 };
-video.addEventListener("timeupdate", handleVideoCurrentTime);
-video.addEventListener("loadedmetadata", handleVideoTotalTime);
 
 const handleTimelineInput = (event) => {
   const {
@@ -100,7 +82,6 @@ const handleTimelineInput = (event) => {
   } = event;
   video.currentTime = value; // 특정 타임라인을 선택하면 그에 따라 비디오 화면이 바뀌도록 함
 };
-timeline.addEventListener("input", handleTimelineInput);
 
 const handleFullScreenBtn = () => {
   const fullScreen = document.fullscreenElement;
@@ -117,13 +98,6 @@ const handleFullScreenEsc = () => {
     fullScreenBtnIcon.classList = "fas fa-expand";
   }
 }; // ESC를 눌러서 전체화면을 종료했을 때의 변화 감지
-fullScreenBtn.addEventListener("click", handleFullScreenBtn);
-document.addEventListener("fullscreenchange", handleFullScreenEsc);
-document.addEventListener("keyup", (event) => {
-  if (event.code === "KeyF") {
-    handleFullScreenBtn();
-  }
-});
 
 let controlsTimeoutId;
 let controlsTimeoutIdMove;
@@ -144,8 +118,6 @@ const handleVideoContainerMousemove = () => {
 const handleVideoContainerMouseleave = () => {
   controlsTimeoutId = setTimeout(hideControls, 1000); // 2. 마우스가 비디오에서 나갔을 때 1초 후에 컨트롤바 숨기기
 };
-videoContainer.addEventListener("mousemove", handleVideoContainerMousemove);
-videoContainer.addEventListener("mouseleave", handleVideoContainerMouseleave);
 
 let volumeRangeTimeoutIdMove;
 let volumeRangeTimeoutId;
@@ -165,8 +137,6 @@ const handleMuteBtnMousemove = () => {
 const handleMuteBtnMouseleave = () => {
   volumeRangeTimeoutId = setTimeout(hideVolumeRange, 100);
 };
-muteBtn.addEventListener("mousemove", handleMuteBtnMousemove);
-muteBtn.addEventListener("mouseleave", handleMuteBtnMouseleave);
 
 const handleVolumeRangeMousemove = () => {
   if (volumeRangeTimeoutId) {
@@ -183,5 +153,36 @@ const handleVolumeRangeMousemove = () => {
 const handleVolumeRangeMouseleave = () => {
   volumeRangeTimeoutId = setTimeout(hideVolumeRange, 100);
 };
+
+const handleVideoEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, { method: "POST" });
+};
+
+playBtn.addEventListener("click", handlePlayBtnClick);
+muteBtn.addEventListener("click", handleMuteBtnClick);
+muteBtn.addEventListener("mousemove", handleMuteBtnMousemove);
+muteBtn.addEventListener("mouseleave", handleMuteBtnMouseleave);
+volumeRange.addEventListener("input", handleVolumeRangeInput);
+volumeRange.addEventListener("change", handleVolumeRangeChange);
 volumeRange.addEventListener("mousemove", handleVolumeRangeMousemove);
 volumeRange.addEventListener("mouseleave", handleVolumeRangeMouseleave);
+video.addEventListener("click", handlePlayBtnClick);
+video.addEventListener("timeupdate", handleVideoCurrentTime);
+video.addEventListener("loadedmetadata", handleVideoTotalTime);
+video.addEventListener("ended", handleVideoEnded);
+timeline.addEventListener("input", handleTimelineInput);
+fullScreenBtn.addEventListener("click", handleFullScreenBtn);
+document.addEventListener("fullscreenchange", handleFullScreenEsc);
+videoContainer.addEventListener("mousemove", handleVideoContainerMousemove);
+videoContainer.addEventListener("mouseleave", handleVideoContainerMouseleave);
+
+document.addEventListener("keyup", (event) => {
+  if (event.code === "Space") {
+    handlePlayBtnClick();
+  } else if (event.code === "KeyM") {
+    handleMuteBtnClick();
+  } else if (event.code === "KeyF") {
+    handleFullScreenBtn();
+  }
+});
