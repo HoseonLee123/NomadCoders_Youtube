@@ -1,6 +1,8 @@
 extends ../base.pug
 
 block content
+  div 
+    button#startBtn Start Recording
   if errorMessage   
     h4=errorMessage 
 
@@ -11,3 +13,6 @@ block content
     input(name="description" type="text" placeholder="Description" required)
     input(name="hashtags" type="text" placeholder="Hashtags, separated by comma" required )
     input(value="Upload" type="submit" )
+
+block scripts 
+  script(src="/assets/js/recorder.js") 
