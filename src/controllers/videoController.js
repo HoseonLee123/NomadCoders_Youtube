@@ -128,3 +128,15 @@ export const postUpload = async (req, res) => {
   }
   return res.redirect("/");
 };
+
+// apiRouter
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.status(404);
+  }
+  video.meta.views += 1;
+  await video.save();
+  return res.status(200);
+};

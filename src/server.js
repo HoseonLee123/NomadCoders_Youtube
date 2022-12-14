@@ -6,6 +6,7 @@ import { localsMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import apiRouter from "./routers/apiRouter";
 
 const app = express(); // Create a server
 
@@ -31,5 +32,6 @@ app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 app.use("/uploads", express.static("uploads")); // Connect Express with the folder
 app.use("/assets", express.static("assets")); // Connect Express with the folder
+app.use("/api", apiRouter);
 
 export default app;
