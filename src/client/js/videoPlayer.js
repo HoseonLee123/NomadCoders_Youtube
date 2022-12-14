@@ -3,7 +3,7 @@ const playBtn = document.getElementById("play");
 const playBtnIcon = playBtn.querySelector("i");
 const muteBtn = document.getElementById("mute");
 const muteBtnIcon = muteBtn.querySelector("i");
-const volumeRange = document.getElementById("volume");
+const volumeRange = document.getElementById("volumeRange");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
@@ -101,7 +101,26 @@ const handleFullScreenEsc = () => {
 
 let controlsTimeoutId;
 let controlsTimeoutIdMove;
-const hideControls = () => videoControls.classList.remove("showing");
+/**
+ * Change the cursor shape of various elements.
+ * @param {string} pointer1 videoContainer
+ * @param {string} pointer2 playBtn, muteBtn, fullScreenBtn, volumeRange
+ */
+const changeCursor = (pointer1, pointer2) => {
+  videoContainer.style.cursor = pointer1;
+  timeline.style.cursor = pointer2;
+  playBtn.style.cursor = pointer2;
+  muteBtn.style.cursor = pointer2;
+  fullScreenBtn.style.cursor = pointer2;
+  volumeRange.style.cursor = pointer2;
+};
+const hideControlsPlusCursor = () => {
+  videoControls.classList.remove("showing");
+  changeCursor("none", "none");
+};
+const hideControls = () => {
+  videoControls.classList.remove("showing");
+};
 const handleVideoContainerMousemove = () => {
   if (controlsTimeoutId) {
     clearTimeout(controlsTimeoutId);
@@ -112,8 +131,9 @@ const handleVideoContainerMousemove = () => {
     controlsTimeoutIdMove = null;
   } // 5. 4번이 실행되는 동안 다시 마우스가 움직이는 경우에, 실행중인 4번 없애주기
   videoControls.classList.add("showing"); // 1. 마우스가 비디오에 들어왔을 때 컨트롤바 보이기
-  // volumeRange.classList.remove("showing");
-  controlsTimeoutIdMove = setTimeout(hideControls, 3000); // 4. 마우스가 비디오에 들어오고, 비디오 안에서 3초 동안 아무 동작을 안 하면 컨트롤바 숨기기
+  changeCursor("auto", "pointer");
+
+  controlsTimeoutIdMove = setTimeout(hideControlsPlusCursor, 3000); // 4. 마우스가 비디오에 들어오고, 비디오 안에서 3초 동안 아무 동작을 안 하면 컨트롤바 숨기기
 };
 const handleVideoContainerMouseleave = () => {
   controlsTimeoutId = setTimeout(hideControls, 1000); // 2. 마우스가 비디오에서 나갔을 때 1초 후에 컨트롤바 숨기기

@@ -4,7 +4,7 @@
   video {
     width: 100%;
   }
-  #volume {
+  #volumeRange {
     opacity: 0;
     &.showing {
       opacity: 1;
@@ -12,7 +12,6 @@
     position: absolute;
     bottom: 30px;
     left: 110px;
-    cursor: pointer;
   }
   .videoControls {
     opacity: 0;
@@ -30,7 +29,6 @@
       padding-bottom: 20px;
       .videoControls__timeline {
         width: 98%;
-        cursor: pointer;
       }
       .videoControls__time {
         font-size: 15px;
@@ -46,20 +44,13 @@
         .videoControls__play {
           margin-right: 25px;
           font-size: 25px;
-          cursor: pointer;
         }
-        .videoControls__volume {
+        .videoControls__mute {
           font-size: 25px;
-          cursor: pointer;
-          input {
-            cursor: pointer;
-            margin-left: 5px;
-          }
         }
       }
       .videoControls__second-2 {
         font-size: 25px;
-        cursor: pointer;
       }
     }
   }
