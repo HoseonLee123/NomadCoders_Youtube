@@ -16,6 +16,7 @@ const init = async () => {
 };
 
 let recorder;
+let videoFile;
 const handleStartBtnStart = async () => {
   await init();
   if (startBtn.disabled) {
@@ -27,7 +28,7 @@ const handleStartBtnStart = async () => {
 
     recorder = new MediaRecorder(stream);
     recorder.ondataavailable = (event) => {
-      const videoFile = URL.createObjectURL(event.data);
+      videoFile = URL.createObjectURL(event.data);
       video.srcObject = null;
       video.src = videoFile;
       video.loop = true;
@@ -45,6 +46,12 @@ const handleStartBtnStop = () => {
   recorder.stop();
 };
 
-const handleStartBtnDownload = () => {};
+const handleStartBtnDownload = () => {
+  const a = document.createElement("a");
+  a.href = videoFile;
+  a.download = "MyRecording.webm";
+  document.body.appendChild(a);
+  a.click();
+};
 
 startBtn.addEventListener("click", handleStartBtnStart);
