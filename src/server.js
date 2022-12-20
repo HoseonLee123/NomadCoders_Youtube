@@ -7,6 +7,7 @@ import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import apiRouter from "./routers/apiRouter";
+import flash from "express-flash";
 
 const app = express(); // Create a server
 
@@ -25,8 +26,8 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 ); // session 생성 user 기억
+app.use(flash());
 app.use(localsMiddleware); // res.locals object 생성
-
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
