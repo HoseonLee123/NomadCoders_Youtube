@@ -197,12 +197,12 @@ document.addEventListener("fullscreenchange", handleFullScreenEsc);
 videoContainer.addEventListener("mousemove", handleVideoContainerMousemove);
 videoContainer.addEventListener("mouseleave", handleVideoContainerMouseleave);
 
-document.addEventListener("keyup", (event) => {
-  if (event.code === "Space") {
-    handlePlayBtnClick();
-  } else if (event.code === "KeyM") {
-    handleMuteBtnClick();
-  } else if (event.code === "KeyF") {
-    handleFullScreenBtn();
-  }
-});
+// document.addEventListener("keyup", (event) => {
+//   if (event.code === "Space") {
+//     handlePlayBtnClick();
+//   } else if (event.code === "KeyM") {
+//     handleMuteBtnClick();
+//   } else if (event.code === "KeyF") {
+//     handleFullScreenBtn();
+//   }
+// });
