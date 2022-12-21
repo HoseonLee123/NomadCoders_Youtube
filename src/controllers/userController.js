@@ -203,7 +203,20 @@ export const postChangePassword = async (req, res) => {
 };
 
 export const see = async (req, res) => {
+  let _id;
+  try {
+    _id = req.session.user._id;
+  } catch (error) {
+    _id = null;
+  }
   const { id } = req.params;
+  let isOwner;
+  if (_id === id) {
+    isOwner = true;
+  } else {
+    isOwner = false;
+  }
+
   const user = await User.findById(id).populate({
     path: "videos",
     populate: {
@@ -217,5 +230,6 @@ export const see = async (req, res) => {
   return res.render("users/profile", {
     pageTitle: user.name,
     user,
+    isOwner,
   });
 };

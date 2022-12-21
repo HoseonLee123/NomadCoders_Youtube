@@ -5,8 +5,11 @@ block content
   div.profile__data
     img(src="/" + user.avatarUrl).avatar
     h3=user.name
-  div.profile__edit
-    a(href="/users/edit") Edit Profile &rarr;
+
+  if(isOwner)
+    div.profile__edit
+      a(href="/users/edit") Edit Profile &rarr;
+
   div.video-grid
     each video in user.videos
       +video(video)
