@@ -11,6 +11,7 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenBtnIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
+const commentForm = document.getElementById("commentForm");
 
 const handlePlayBtnClick = () => {
   if (video.paused) {
@@ -179,6 +180,17 @@ const handleVideoEnded = () => {
   fetch(`/api/videos/${id}/view`, { method: "POST" });
 };
 
+const handleKeyboardShortcuts = (event) => {
+  if (event.code === "Space") {
+    event.preventDefault(); // Not in keyup event
+    handlePlayBtnClick();
+  } else if (event.code === "KeyM") {
+    handleMuteBtnClick();
+  } else if (event.code === "KeyF") {
+    handleFullScreenBtn();
+  }
+};
+
 playBtn.addEventListener("click", handlePlayBtnClick);
 muteBtn.addEventListener("click", handleMuteBtnClick);
 muteBtn.addEventListener("mousemove", handleMuteBtnMousemove);
@@ -197,12 +209,9 @@ document.addEventListener("fullscreenchange", handleFullScreenEsc);
 videoContainer.addEventListener("mousemove", handleVideoContainerMousemove);
 videoContainer.addEventListener("mouseleave", handleVideoContainerMouseleave);
 
-// document.addEventListener("keyup", (event) => {
-//   if (event.code === "Space") {
-//     handlePlayBtnClick();
-//   } else if (event.code === "KeyM") {
-//     handleMuteBtnClick();
-//   } else if (event.code === "KeyF") {
-//     handleFullScreenBtn();
-//   }
-// });
+document.addEventListener("keydown", handleKeyboardShortcuts);
+
+commentForm.addEventListener("click", () => {
+  document.removeEventListener("keydown", handleKeyboardShortcuts);
+});
+// TODO 댓글 클릭시 단축키 사라지고, 댓글 외에 클릭시 단축키 재실행

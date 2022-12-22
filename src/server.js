@@ -17,6 +17,7 @@ app.set("views", process.cwd() + "/src/views"); // pug파일들을 잘 찾을 �
 app.use(morgan("dev"));
 
 app.use(express.urlencoded({ extended: true })); // form의 값들을 이해할 수 있도록 설정
+app.use(express.json()); // front-end에서 JSON.stringify()한 것을 back-end가 JSON.parse()를 해서 javascript object로 변환
 
 app.use(
   session({
@@ -26,8 +27,9 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 ); // session 생성 user 기억
-app.use(flash());
+app.use(flash()); // req.flash() 이용 가능
 app.use(localsMiddleware); // res.locals object 생성
+
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
